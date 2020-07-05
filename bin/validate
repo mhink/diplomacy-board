@@ -1,0 +1,15 @@
+#! /usr/bin/env node
+
+const path = require("path");
+
+const BASE_PATH = path.resolve(__dirname, '..');
+
+const dipModuleName = process.argv[2];
+const dipModulePath = path.resolve(BASE_PATH, "res", `${dipModuleName}.dip.js`);
+const dipModule = require(dipModulePath);
+
+const { Board, Province } = require("../utils/Board");
+
+const board = new Board(dipModule);
+
+board.validate();
