@@ -1,13 +1,14 @@
 const path = require("path");
 const webpack = require("webpack");
 const paths = require("./paths.config.js");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry:    './index.js',
-  context:  paths.src,
+  entry: './index.js',
+  context: paths.src,
   devtool: "source-map",
-  mode:     'development',
+  mode: 'development',
   output: {
     path: paths.dist,
     filename: 'example.js',
@@ -28,7 +29,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       "React":    ["react"],
       "ReactDOM": ["react-dom"],
-    })
+    }),
+    new MiniCssExtractPlugin(),
   ],
   devServer: {
     hot: false,
@@ -43,6 +45,20 @@ module.exports = {
         exclude: /node_modules/,
         test: /\.jsx?$/,
         loader: 'babel-loader',
+      }, {
+        exclude: /node_modules/,
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+            }
+          },
+          "postcss-loader",
+        ]
       }]
     }]
   }

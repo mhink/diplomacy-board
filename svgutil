@@ -1,0 +1,18 @@
+#! /usr/bin/env node
+
+const fs = require("fs");
+const cdip = require("./res/classical.dip.js");
+
+let pathout = "";
+
+for (const id in cdip.provinces) {
+  const val = cdip.provinces[id];
+  if (!val.path) continue;
+
+  pathout += "<Region";
+  pathout += ` id='${id}'`;
+  pathout += ` path='${val.path}'`;
+  pathout += '/>\n';
+}
+
+fs.writeFileSync("./regions.jsx", pathout, { encoding: "utf8" });

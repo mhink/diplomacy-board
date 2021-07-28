@@ -3,6 +3,7 @@ import Province from "./Province";
 
 export default class Board {
   constructor() {
+    this.initialized = false;
     this.players = new Map();
     this.provinces = new Map();
     this.aliases = new Map();
@@ -51,6 +52,7 @@ export default class Board {
       }
     } finally {
       this.warnings = null;
+      this.initialized = true;
     }
   }
 

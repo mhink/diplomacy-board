@@ -1,13 +1,11 @@
 export default class Province {
   constructor(board, id) {
-    this.board  = board;
-    this.id     = id;
-    this.name   = null;
+    this.board = board;
+    this.id = id;
+    this.name = null;
     this.region = null;
-    this.flags  = new Set();
-    this.land   = null;
-    this.sea    = null;
-    this.convoy = null;
+    this.flags = new Set();
+    this.path = null;
     this._edges = new Map();
     this._superprovince = null;
     this._subprovinces = new Set();
@@ -27,6 +25,7 @@ export default class Province {
       sea,
       supplyCenter,
       convoy,
+      path,
       superprovince,
       subprovinces = [],
     } = this.config;
@@ -38,17 +37,19 @@ export default class Province {
       this.board.createProvinceAlias(aliasId, this.id);
     }
     this.region = region;
+    this.path = path;
     if (land)   this.flags.add("land");
     if (sea)    this.flags.add("sea");
     if (convoy) this.flags.add("convoy");
     if (supplyCenter) {
       this.board.registerSupplyCenter(this.id, supplyCenter);
+      this.flags.add("supply-center");
     }
     if (superprovince) {
       this._superprovince = superprovince;
     }
     for (const subprovince of subprovinces) {
-      this._subprovinces.add(subprovince);
+      thi._subprovinces.add(subprovince);
     }
   }
 
